@@ -7,6 +7,6 @@ Gem::Specification.new do |s|
   s.authors     = ["Jose Goncalves"]
   s.email       = 'zetoeu@gmail.com'
   s.files       = ["lib/control.rb"]
-  s.homepage    =
-    'http://rubygems.org/gems/control'
+  s.homepage    = 'http://rubygems.org/gems/control'
+  s.add_dependency('activerecord','>= 3.1.0')
 end
