@@ -6,6 +6,11 @@ module Control
 
     attr_reader :current_state
     attr_reader :enabled
+    
+    def initialize
+      @enabled = true
+    end
+    
     def disable
       @enabled = false
     end
