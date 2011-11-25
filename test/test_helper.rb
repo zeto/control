@@ -7,3 +7,4 @@ require 'active_record'
 
 require 'control'
 
+#require File.dirname(__FILE__) + "/factories"
