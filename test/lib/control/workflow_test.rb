@@ -8,7 +8,7 @@ class Life
 end
 
 class State < ActiveRecord::Base
-  
+  extend Control::State::ClassMethods
 end
 
 class StateTwo < State
@@ -22,14 +22,9 @@ class WorkflowTest < ActiveSupport::TestCase
   end
   
   test 'State can define next states' do
-    begin
-      class StateTest
-        next_states :some_other_state
-      end
-    rescue
-      assert false
+    class StateTest
+      extend Control::State::ClassMethods
+      next_states :some_other_state
     end
-    
-    assert true
   end
 end
