@@ -3,14 +3,14 @@ require 'rake/testtask'
 
 task :default => [:test_units]
 
-desc "Run basic tests"
+desc "Run tests"
 Rake::TestTask.new("test_units") { |t|
   t.pattern = 'test/lib/control/*_test.rb'
-  t.verbose = false
+  t.verbose = true
   t.warning = false
 }
 
-desc "Open an irb session preloaded with this library"
+desc "Open an irb session"
 task :console do
   sh "irb -rubygems -I lib -r control.rb"
 end
