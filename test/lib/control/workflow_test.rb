@@ -13,6 +13,25 @@ class WorkflowTest < Test::Unit::TestCase
     assert Product.new.states.include?(Validate)
   end
   
-  def 
+  def test_initially_current_state_is_not_defined
+    assert Product.new.current_state == nil
   end
+  
+  def test_after_state_save_current_state_must_change
+    p = Product.new
+    p.save
+  
+    a = Assembly.new
+    a.product = p
+    a.save
+        
+    assert p.current_state == a
+    
+    v = Validate.new
+    v.product = p
+    v.save
+    
+    assert p.current_state = v
+  end
+
 end

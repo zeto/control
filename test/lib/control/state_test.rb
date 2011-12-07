@@ -6,6 +6,21 @@ class StateTest < Test::Unit::TestCase
   end
   
   def test_correct_next_states
-    assert Validate.next_states
+    assert Validate.next_states.include?(Box)
+    assert Validate.next_states.include?(Reject)
+    assert !Validate.next_states.include?(Validate)
+    assert !Validate.next_states.include?(Assembly)
   end
+  
+  def test_infer_workflow_to_which_i_belong
+    p = Product.new
+    
+    box = Box.new
+    box.product = p
+    
+    assert box.workflow
+    assert box.workflow == box.product
+    assert Product == box.workflow.class
+  end
+  
 end

@@ -60,27 +60,27 @@ class Product < ActiveRecord::Base
 end
 
 class Assembly < ActiveRecord::Base
-	extend Control::State::ClassMethods
+	include Control::State
 	
   belongs_to :product
   next_states :test
 end
 
 class Validate < ActiveRecord::Base
-  extend Control::State::ClassMethods
+  include Control::State
 
   belongs_to :product
   next_states :box, :reject
 end
 
 class Box < ActiveRecord::Base
-  extend Control::State::ClassMethods
+  include Control::State
 
   belongs_to :product
 end
 
 class Reject < ActiveRecord::Base
-  extend Control::State::ClassMethods
+  include Control::State
 
   belongs_to :product
 end
