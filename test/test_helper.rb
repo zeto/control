@@ -13,6 +13,12 @@ ActiveRecord::Base.establish_connection(:adapter => "sqlite3", :database => ":me
 ActiveRecord::Schema.define(:version => 1) do
   
   create_table :transitions do |t|
+    t.string  :workflow
+    t.integer :workflow_id
+    t.string :from
+    t.integer :from_id
+    t.string :to
+    t.integer :to_id
     t.timestamps
   end
   
@@ -63,7 +69,7 @@ class Assembly < ActiveRecord::Base
 	include Control::State
 	
   belongs_to :product
-  next_states :test
+  next_states :validate
 end
 
 class Validate < ActiveRecord::Base

@@ -23,7 +23,7 @@ class Bulb < ActiveRecord::Base
 end
 
 class On < ActiveRecord::Base
-	include Control::State
+  include Control::State
 	
   belongs_to :bulb
 end
