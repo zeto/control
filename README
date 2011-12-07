@@ -1,0 +1,12 @@
+Workflow engine
+
+Premises
+* ActiveRecord
+* Each state is a separate object. Can be as rich in functionality was wanted
+
+Features
+* No data is ever lost. History is always saved. 
+* It is possible to track every single transition done in the workflow
+* Advancing a state is as easy as calling "save"
+
+
