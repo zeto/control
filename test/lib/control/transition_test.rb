@@ -5,22 +5,23 @@ class TransitionTest < Test::Unit::TestCase
     p = Product.new
     p.save
   
-    assert Control::Transition.all.count == 0
+    assert p.transitions.count == 0
   
     a = Assembly.new
     a.product = p
     a.save
     
-    assert Control::Transition.all.count == 1
-    assert Control::Transition.where(:workflow => 'Product').first.to == 'Assembly'
+    assert p.transitions.count == 1
+    assert p.transitions.first.to == 'Assembly'
     
     v = Validate.new
     v.product = p
     v.save
     
-    assert Control::Transition.all.count == 2
-    assert Control::Transition.where(:workflow => 'Product').last.from == 'Assembly'
-    assert Control::Transition.where(:workflow => 'Product').last.to == 'Validate'
+    assert p.transitions.count == 2
+    assert p.transitions.last.from == 'Assembly'
+    assert p.transitions.last.to == 'Validate'
+    assert p.transitions.first.created_at < p.transitions.last.created_at
   end
 
 end
