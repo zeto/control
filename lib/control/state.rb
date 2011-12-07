@@ -51,7 +51,7 @@ module Control
     end
     
     def is_part_of_workflow?
-      true
+      !!workflow
     end
     
     def workflow

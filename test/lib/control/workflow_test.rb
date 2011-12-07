@@ -31,7 +31,7 @@ class WorkflowTest < Test::Unit::TestCase
     v.product = p
     v.save
     
-    assert p.current_state = v
+    assert p.current_state == v
   end
 
 end
