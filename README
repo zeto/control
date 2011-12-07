@@ -2,11 +2,63 @@ Workflow engine
 
 Premises
 * ActiveRecord
-* Each state is a separate object. Can be as rich in functionality was wanted
+* Each state is a separate object.
 
 Features
+* State can be as rich in functionality was wanted.
 * No data is ever lost. History is always saved. 
-* It is possible to track every single transition done in the workflow
-* Advancing a state is as easy as calling "save"
+* It is possible to track every single transition done in the workflow.
+* Advancing a state is as easy as calling "save".
+* Minimal code to define workflow and states.
 
+Example
+
+Example:
+
+class Bulb < ActiveRecord::Base
+  include Control::Workflow
+  
+  has_many :ons
+  has_many :offs
+end
+
+class On < ActiveRecord::Base
+	include Control::State
+	
+  belongs_to :bulb
+end
+
+class Off < ActiveRecord::Base
+  include Control::State
+
+  belongs_to :bulb
+  next_states :on # optional, in this case the bulb will always verify the transition
+end
+
+def example
+  my_bulb = Bulb.new
+  
+  my_on = On.new do |o|
+    o.bulb = my_bulb
+  end
+  
+  my_off = Off.new do |o|
+    o.bulb = my_bulb
+  end
+  
+  # Check possible states for my bulb. (On, Off)
+  my_bulb.states
+  
+  # Transitions the bulb to the "On" state
+  my_on.save
+  
+  # Transitions the bulb to the "Off" state
+  my_off.save
+  
+  # Every transition is recorded. (On -> Off)
+  my_bulb.transitions
+  
+  # Bulb knows which state is current. (Off)
+  my_bulb.current_state
+end
 
