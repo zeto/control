@@ -20,11 +20,15 @@ module Control
     end
     
     def disable
-      @enabled = false
+      @enabled = false 
     end
 
+    def transitions
+      Control::Transition.where(:workflow => self.class.name, :workflow_id => self.id)
+    end
+    
     def history
-      puts 'the rest is history...'
+      transitions
     end
 
     def states
