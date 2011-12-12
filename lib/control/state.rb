@@ -29,7 +29,7 @@ module Control
     
     def save
       if workflow.enabled
-        if true #workflow.current_state.class.next_states.include? self.class
+        if !workflow.current_state || next_state_is_valid
           if super
             if is_part_of_workflow?
               # save transition
@@ -68,6 +68,12 @@ module Control
           return possible_workflow_object
         end
       end
+    end
+    
+    private
+    
+    def next_state_is_valid
+      workflow.current_state && (workflow.current_state.class.next_states.include? self.class)
     end
   end
 end

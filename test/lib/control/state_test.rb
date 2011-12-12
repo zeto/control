@@ -26,15 +26,15 @@ class StateTest < Test::Unit::TestCase
   def test_state_change_complies_with_defined_next_states
     p = Product.new
     
+    validate = Validate.new
+    validate.product = p
+    validate.save
+    
     assembly = Assembly.new
     assembly.product = p
-    assembly.save
-    
-    box = Box.new
-    box.product = p
     
     assert_raise Control::InvalidTransition do
-      box.save  
+      assembly.save  
     end
     
   end
