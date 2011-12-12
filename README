@@ -11,6 +11,12 @@ Features
 * Advancing a state is as easy as calling "save".
 * Minimal code to define workflow and states.
 
+Linux-Users:
+* If your are using using linux you need to install sqlite3
+* just hit 'sudo apt-get install sqlite3 libsqlite3-dev'
+* and your good to go!
+
+
 Example
 
 Example:
