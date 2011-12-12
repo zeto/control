@@ -1,6 +1,27 @@
 require(File.expand_path(File.join('.','test/test_helper')))
 
 class WorkflowTest < Test::Unit::TestCase
+
+
+  def test_state_belongs_to_workflow
+    p = Product.new
+    p.save
+  
+    a = Assembly.new
+    a.product = p       
+    
+    assert_nothing_raised Control::NotAssociatedToWorkflow do
+      a.save   
+    end 
+  end
+  
+  def test_state_does_not_belongs_to_workflow
+    workflowless_state = WorkflowlessState.new
+    assert_raise Control::NotAssociatedToWorkflow do
+      workflowless_state.save   
+    end 
+  end  
+
   def test_workflow_is_enabled_by_default
     assert Product.new.enabled
   end

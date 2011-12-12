@@ -45,6 +45,11 @@ ActiveRecord::Schema.define(:version => 1) do
     t.integer :product_id
     t.timestamps
   end
+  
+  create_table :workflowless_states do |t|
+    t.timestamps
+  end
+    
 end
 
 #                   Product
@@ -89,4 +94,10 @@ class Reject < ActiveRecord::Base
   include Control::State
 
   belongs_to :product
+end
+
+class WorkflowlessState < ActiveRecord::Base
+  include Control::State
+  
+  next_states :validate
 end
