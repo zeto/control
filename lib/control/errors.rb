@@ -9,4 +9,8 @@ module Control
   
   class WorkflowDisabled < ControlError
   end
+  
+  class IsNotAssociatedToWorflow < ControlError
+  end
+  
 end

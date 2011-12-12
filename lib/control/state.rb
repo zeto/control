@@ -27,11 +27,13 @@ module Control
       super
     end
     
-    def save
+  def save
+    # Ensures that a State MUST HAVE a Workflow associated.
+    raise Control::IsNotAssociatedToWorflow unless is_part_of_workflow?
+    
       if workflow.enabled
         if !workflow.current_state || next_state_is_valid
           if super
-            if is_part_of_workflow?
               # save transition
               transition = Control::Transition.new do |t|
                 t.workflow = workflow.class.name
@@ -43,10 +45,8 @@ module Control
                 t.to = self.class.name
                 t.to_id = id
               end
-              transition.save
-              
-              workflow.current_state = self
-            end
+              transition.save              
+              workflow.current_state = self            
           end
         else
           raise Control::InvalidTransition
@@ -61,13 +61,16 @@ module Control
     end
     
     def workflow
-      self.class.reflect_on_all_associations.each do |a|
-        possible_workflow_object = self.send a.name
-        
-        if possible_workflow_object.class.respond_to?('is_workflow?') && possible_workflow_object.class.is_workflow?
-          return possible_workflow_object
+      unless @workflow
+        self.class.reflect_on_all_associations.each do |a|
+          possible_workflow_object = self.send a.name        
+          if possible_workflow_object.class.respond_to?('is_workflow?') && possible_workflow_object.class.is_workflow?
+            @workflow ||= possible_workflow_object
+            return @workflow         
+          end
         end
       end
+      @workflow
     end
     
     private
