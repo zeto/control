@@ -11,28 +11,21 @@ module Control
       end
     end
 
-    attr_accessor :current_state
+    attr_accessor :current_state, :enabled
     attr_reader :enabled
     
     def initialize
       super
       @enabled = true
     end
-    
-    def disable
-      @enabled = false 
-    end
 
     def transitions
       Control::Transition.where(:workflow => self.class.name, :workflow_id => self.id)
     end
     
-    def history
-      transitions
-    end
+    alias :history :transitions
 
     def states
-      # really bad solution, but is executed only once per object
       self.class.reflect_on_all_associations.each.map do |a|
         klass = Kernel.const_get(a.name.to_s.classify)
         

@@ -29,24 +29,30 @@ module Control
     
     def save
       if workflow.enabled
-        super
-        if is_part_of_workflow?
-          
-          # save transition
-          transition = Control::Transition.new do |t|
-            t.workflow = workflow.class.name
-            t.workflow_id = workflow.id
-            if workflow.current_state
-              t.from = workflow.current_state.class.name
-              t.from_id = workflow.current_state.id
+        if true #workflow.current_state.class.next_states.include? self.class
+          if super
+            if is_part_of_workflow?
+              # save transition
+              transition = Control::Transition.new do |t|
+                t.workflow = workflow.class.name
+                t.workflow_id = workflow.id
+                if workflow.current_state
+                  t.from = workflow.current_state.class.name
+                  t.from_id = workflow.current_state.id
+                end
+                t.to = self.class.name
+                t.to_id = id
+              end
+              transition.save
+              
+              workflow.current_state = self
             end
-            t.to = self.class.name
-            t.to_id = id
           end
-          transition.save
-          
-          workflow.current_state = self
+        else
+          raise Control::InvalidTransition
         end
+      else
+        raise Control::WorkflowDisabled
       end
     end
     
@@ -55,7 +61,6 @@ module Control
     end
     
     def workflow
-      # really bad solution, but works
       self.class.reflect_on_all_associations.each do |a|
         possible_workflow_object = self.send a.name
         

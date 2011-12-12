@@ -17,7 +17,7 @@ class WorkflowTest < Test::Unit::TestCase
     assert Product.new.current_state == nil
   end
   
-  def test_after_state_save_current_state_must_change
+  def test_after_transition_current_state_must_change
     p = Product.new
     p.save
   

@@ -12,16 +12,16 @@ class TransitionTest < Test::Unit::TestCase
     a.save
     
     assert p.transitions.count == 1
-    assert p.transitions.first.to == 'Assembly'
+    assert p.transitions.first.to == Assembly.to_s
+    assert p.transitions.first.created_at < Time.current
     
     v = Validate.new
     v.product = p
     v.save
     
     assert p.transitions.count == 2
-    assert p.transitions.last.from == 'Assembly'
-    assert p.transitions.last.to == 'Validate'
+    assert p.transitions.last.from == Assembly.to_s
+    assert p.transitions.last.to == Validate.to_s
     assert p.transitions.first.created_at < p.transitions.last.created_at
   end
-
 end

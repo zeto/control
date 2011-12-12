@@ -23,4 +23,20 @@ class StateTest < Test::Unit::TestCase
     assert Product == box.workflow.class
   end
   
+  def test_state_change_complies_with_defined_next_states
+    p = Product.new
+    
+    assembly = Assembly.new
+    assembly.product = p
+    assembly.save
+    
+    box = Box.new
+    box.product = p
+    
+    assert_raise Control::InvalidTransition do
+      box.save  
+    end
+    
+  end
+  
 end
