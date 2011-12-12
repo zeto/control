@@ -73,7 +73,7 @@ module Control
     private
     
     def next_state_is_valid
-      workflow.current_state && (workflow.current_state.class.next_states.include? self.class)
+      workflow.current_state && (workflow.current_state.class.next_states && (workflow.current_state.class.next_states.any? && (workflow.current_state.class.next_states.include? self.class)))
     end
   end
 end

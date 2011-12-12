@@ -12,7 +12,6 @@ module Control
     end
 
     attr_accessor :current_state, :enabled
-    attr_reader :enabled
     
     def initialize
       super
