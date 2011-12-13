@@ -10,7 +10,7 @@ module Control
   class WorkflowDisabled < ControlError
   end
   
-  class NotAssociatedToWorkflow < ControlError
+  class NoAssociationToWorkflow < ControlError
   end
   
 end

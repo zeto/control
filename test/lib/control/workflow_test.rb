@@ -10,14 +10,14 @@ class WorkflowTest < Test::Unit::TestCase
     a = Assembly.new
     a.product = p       
     
-    assert_nothing_raised Control::NotAssociatedToWorkflow do
+    assert_nothing_raised Control::NoAssociationToWorkflow do
       a.save   
     end 
   end
   
   def test_state_does_not_belongs_to_workflow
     workflowless_state = WorkflowlessState.new
-    assert_raise Control::NotAssociatedToWorkflow do
+    assert_raise Control::NoAssociationToWorkflow do
       workflowless_state.save   
     end 
   end  

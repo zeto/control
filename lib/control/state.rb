@@ -28,32 +28,24 @@ module Control
     end
     
     def save
-      # Ensures that a State MUST HAVE a Workflow associated.
-      raise Control::NotAssociatedToWorkflow unless is_part_of_workflow?
-      
-      # Ensures that the worlflow is enabled
+      raise Control::NoAssociationToWorkflow unless is_part_of_workflow?
       raise Control::WorkflowDisabled unless workflow.enabled
-      
-      raise Control::InvalidTransition unless workflow_initial_state_or_next_state_valid
+      raise Control::InvalidTransition unless workflow_initial_state_or_valid_next_state
       
       if super
         save_transition
-        workflow.current_state = self  
+        workflow.current_state = self
       end
     end   
-    
-    def is_part_of_workflow?
-      !!workflow
-    end
     
     def workflow
       unless @workflow
         self.class.reflect_on_all_associations.each do |a|
-          possible_workflow_object = self.send a.name        
-          if possible_workflow_object.class.respond_to?('is_workflow?') && possible_workflow_object.class.is_workflow?
-            @workflow ||= possible_workflow_object
-            return @workflow         
-          end
+          klass = Kernel.const_get(a.name.to_s.classify)
+          if klass.respond_to?('is_workflow?') or klass.is_workflow?
+            @workflow = self.send a.name
+            return @workflow
+          end 
         end
       end
       @workflow
@@ -61,11 +53,15 @@ module Control
     
     private
     
-    def next_state_is_valid
-      workflow.current_state && (workflow.current_state.class.next_states.include? self.class)
+    def is_part_of_workflow?
+      !!workflow
     end
     
-    def workflow_initial_state_or_next_state_valid
+    def next_state_is_valid
+      workflow.current_state && (workflow.current_state.class.next_states && (workflow.current_state.class.next_states.any? && (workflow.current_state.class.next_states.include? self.class)))
+    end
+    
+    def workflow_initial_state_or_valid_next_state
       !workflow.current_state || next_state_is_valid
     end    
     

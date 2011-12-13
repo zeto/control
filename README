@@ -1,3 +1,5 @@
+DOES NOT WORK. YET.
+
 Workflow engine
 
 Premises
@@ -8,18 +10,11 @@ Features
 * State can be as rich in functionality was wanted.
 * No data is ever lost. History is always saved. 
 * It is possible to track every single transition done in the workflow.
-* Advancing a state is as easy as calling "save".
+* Advancing a state is as easy as creating a state object and calling "save".
+* Can transition to same state.
 * Minimal code to define workflow and states.
 
-Linux-Users:
-* If your are using using linux you need to install sqlite3
-* just hit 'sudo apt-get install sqlite3 libsqlite3-dev'
-* and your good to go!
-
-
-Example
-
-Example:
+Simple example for a Bulb with two states:
 
 class Bulb < ActiveRecord::Base
   include Control::Workflow
@@ -38,7 +33,7 @@ class Off < ActiveRecord::Base
   include Control::State
 
   belongs_to :bulb
-  next_states :on # optional, in this case the bulb will always verify the transition
+  next_states :on # optional, constrain possible next states
 end
 
 def example
@@ -67,4 +62,24 @@ def example
   # Bulb knows which state is current. (Off)
   my_bulb.current_state
 end
+
+
+Installing:
+
+1. Add control gem to gemfile.
+gem 'control'
+or
+gem 'control', :git => 'git://github.com/zeto/control.git' # Edge
+
+2. Run task to add necessary tables
+$ rake control
+
+Testing:
+
+$ bundle
+$ rake
+
+Ubuntu Linux users:
+Ruby must be compiled with sqlite3 support
+* 'sudo apt-get install sqlite3 libsqlite3-dev'
 
