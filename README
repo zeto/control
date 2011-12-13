@@ -1,3 +1,5 @@
+DOES NOT WORK. YET.
+
 Workflow engine
 
 Premises
@@ -64,16 +66,18 @@ end
 
 Installing:
 
-Add control gem to gemfile.
-
+1. Add control gem to gemfile.
 gem 'control'
 or
 gem 'control', :git => 'git://github.com/zeto/control.git' # Edge
 
+2. Run task to add necessary tables
+$ rake control
 
 Testing:
 
-Run: rake
+$ bundle
+$ rake
 
 Ubuntu Linux users:
 Ruby must be compiled with sqlite3 support
