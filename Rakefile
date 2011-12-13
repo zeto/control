@@ -5,6 +5,8 @@ task :default => [:test_units]
 
 desc "Run tests"
 Rake::TestTask.new("test_units") { |t|
+  puts "RUNNING TESTS YAY"
+  
   t.pattern = 'test/lib/control/*_test.rb'
   t.verbose = true
   t.warning = false
