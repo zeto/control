@@ -28,23 +28,15 @@ module Control
     end
     
     def save
-      # Ensures that a State MUST HAVE a Workflow associated.
-      raise Control::NotAssociatedToWorkflow unless is_part_of_workflow?
-      
-      # Ensures that the worlflow is enabled
+      raise Control::NoAssociationToWorkflow unless is_part_of_workflow?
       raise Control::WorkflowDisabled unless workflow.enabled
-      
-      raise Control::InvalidTransition unless workflow_initial_state_or_next_state_valid
+      raise Control::InvalidTransition unless workflow_initial_state_or_valid_next_state
       
       if super
         save_transition
-        workflow.current_state = self  
+        workflow.current_state = self
       end
     end   
-    
-    def is_part_of_workflow?
-      !!workflow
-    end
     
     def workflow
       unless @workflow
@@ -61,11 +53,15 @@ module Control
     
     private
     
+    def is_part_of_workflow?
+      !!workflow
+    end
+    
     def next_state_is_valid
       workflow.current_state && (workflow.current_state.class.next_states && (workflow.current_state.class.next_states.any? && (workflow.current_state.class.next_states.include? self.class)))
     end
     
-    def workflow_initial_state_or_next_state_valid
+    def workflow_initial_state_or_valid_next_state
       !workflow.current_state || next_state_is_valid
     end    
     
