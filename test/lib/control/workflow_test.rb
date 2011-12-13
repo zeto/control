@@ -15,11 +15,11 @@ class WorkflowTest < Test::Unit::TestCase
     end 
   end
   
-  def test_state_does_not_belongs_to_workflow
+  def test_state_does_not_belong_to_workflow
     workflowless_state = WorkflowlessState.new
     assert_raise Control::NoAssociationToWorkflow do
       workflowless_state.save   
-    end 
+    end
   end  
 
   def test_workflow_is_enabled_by_default

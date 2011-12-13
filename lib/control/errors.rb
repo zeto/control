@@ -3,7 +3,7 @@ module Control
   end
   
   # Raise when user tries to save a state, 
-  # and the current state does not allow the transition, defined via next_states
+  # and the current state does not allow the transition, defined with next_states
   class InvalidTransition < ControlError
   end
   

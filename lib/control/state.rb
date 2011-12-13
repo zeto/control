@@ -34,7 +34,6 @@ module Control
       
       if super
         save_transition
-        workflow.current_state = self
       end
     end   
     
@@ -42,13 +41,10 @@ module Control
       unless @workflow
         self.class.reflect_on_all_associations.each do |a|
           klass = Kernel.const_get(a.name.to_s.classify)
-          if klass.respond_to?('is_workflow?') or klass.is_workflow?
-            @workflow = self.send a.name
-            return @workflow
-          end 
+          @workflow = a.name if klass.respond_to?('is_workflow?') and klass.is_workflow?
         end
       end
-      @workflow
+      self.send @workflow if @workflow
     end
     
     private

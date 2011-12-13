@@ -10,12 +10,14 @@ module Control
         true
       end
     end
-
-    attr_accessor :current_state, :enabled
     
     def initialize
       super
       @enabled = true
+    end
+    
+    def enabled
+      true
     end
 
     def transitions
@@ -28,10 +30,17 @@ module Control
       self.class.reflect_on_all_associations.each.map do |a|
         klass = Kernel.const_get(a.name.to_s.classify)
         
-        if klass.respond_to?('is_state?') && klass.is_state?
+        if klass.respond_to?('is_state?') and klass.is_state?
           klass
         end
       end
     end
+    
+    def current_state
+      if transitions.last
+        Kernel.const_get(transitions.last.to).find(transitions.last.to_id)
+      end
+    end
+    
   end
 end
