@@ -27,34 +27,20 @@ module Control
       super
     end
     
-  def save
-    # Ensures that a State MUST HAVE a Workflow associated.
-    raise Control::IsNotAssociatedToWorflow unless is_part_of_workflow?
-    
-      if workflow.enabled
-        if !workflow.current_state || next_state_is_valid
-          if super
-              # save transition
-              transition = Control::Transition.new do |t|
-                t.workflow = workflow.class.name
-                t.workflow_id = workflow.id
-                if workflow.current_state
-                  t.from = workflow.current_state.class.name
-                  t.from_id = workflow.current_state.id
-                end
-                t.to = self.class.name
-                t.to_id = id
-              end
-              transition.save              
-              workflow.current_state = self            
-          end
-        else
-          raise Control::InvalidTransition
-        end
-      else
-        raise Control::WorkflowDisabled
+    def save
+      # Ensures that a State MUST HAVE a Workflow associated.
+      raise Control::NotAssociatedToWorkflow unless is_part_of_workflow?
+      
+      # Ensures that the worlflow is enabled
+      raise Control::WorkflowDisabled unless workflow.enabled
+      
+      raise Control::InvalidTransition unless workflow_initial_state_or_next_state_valid
+      
+      if super
+        save_transition
+        workflow.current_state = self  
       end
-    end
+    end   
     
     def is_part_of_workflow?
       !!workflow
@@ -78,5 +64,24 @@ module Control
     def next_state_is_valid
       workflow.current_state && (workflow.current_state.class.next_states.include? self.class)
     end
+    
+    def workflow_initial_state_or_next_state_valid
+      !workflow.current_state || next_state_is_valid
+    end    
+    
+    def save_transition
+      transition = Control::Transition.new do |t|
+        t.workflow = workflow.class.name
+        t.workflow_id = workflow.id
+        if workflow.current_state
+          t.from = workflow.current_state.class.name
+          t.from_id = workflow.current_state.id
+        end
+        t.to = self.class.name
+        t.to_id = id
+      end
+      transition.save                       
+    end 
+    
   end
 end
