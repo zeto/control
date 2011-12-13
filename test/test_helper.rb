@@ -7,50 +7,8 @@ require 'active_record'
 require 'active_support/core_ext/object'
 require 'control'
 
-
-ActiveRecord::Base.establish_connection(:adapter => "sqlite3", :database => ":memory:")
-
-ActiveRecord::Schema.define(:version => 1) do
-  
-  create_table :transitions do |t|
-    t.string  :workflow
-    t.integer :workflow_id
-    t.string :from
-    t.integer :from_id
-    t.string :to
-    t.integer :to_id
-    t.timestamps
-  end
-  
-  create_table :products do |t|
-    t.timestamps
-  end
-  
-  create_table :assemblies do |t|
-    t.integer :product_id
-    t.timestamps
-  end
-  
-  create_table :validates do |t|
-    t.integer :product_id
-    t.timestamps
-  end
-  
-  create_table :boxes do |t|
-    t.integer :product_id
-    t.timestamps
-  end
-  
-  create_table :rejects do |t|
-    t.integer :product_id
-    t.timestamps
-  end
-  
-  create_table :workflowless_states do |t|
-    t.timestamps
-  end
-    
-end
+require './test/test_schema'
+require './db/migrate/create_transitions'
 
 #                   Product
 #                      |
@@ -61,9 +19,10 @@ end
 #                 |                     |
 #                 -----------------------
 
+CreateTransitions.up
+
 class Product < ActiveRecord::Base
   include Control::Workflow
-  
   has_many :assemblies
   has_many :validates
   has_many :boxes

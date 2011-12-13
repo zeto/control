@@ -1,0 +1,8 @@
+Description:
+    Installs control by coping and executing the Transition migration
+
+Example:
+    rails generate control_install
+
+    This will create:
+        db/migrate/%Y%m%d%H%M%Screate_transitions.rb
