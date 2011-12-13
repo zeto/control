@@ -41,11 +41,11 @@ module Control
     def workflow
       unless @workflow
         self.class.reflect_on_all_associations.each do |a|
-          possible_workflow_object = self.send a.name        
-          if possible_workflow_object.class.respond_to?('is_workflow?') && possible_workflow_object.class.is_workflow?
-            @workflow ||= possible_workflow_object
-            return @workflow         
-          end
+          klass = Kernel.const_get(a.name.to_s.classify)
+          if klass.respond_to?('is_workflow?') or klass.is_workflow?
+            @workflow = self.send a.name
+            return @workflow
+          end 
         end
       end
       @workflow
