@@ -2,7 +2,6 @@ require(File.expand_path(File.join('.','test/test_helper')))
 
 class WorkflowTest < Test::Unit::TestCase
 
-
   def test_state_belongs_to_workflow
     p = Product.new
     p.save

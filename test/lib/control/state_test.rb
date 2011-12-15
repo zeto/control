@@ -36,7 +36,38 @@ class StateTest < Test::Unit::TestCase
     assert_raise Control::InvalidTransition do
       assembly.save  
     end
+  end
+  
+  def test_previous_state
+    p = Product.new
+    p.save
     
+    assembly = Assembly.new
+    assembly.product = p
+    assembly.save
+    
+    validate = Validate.new
+    validate.product = p
+    validate.save
+
+    assert assembly.previous.nil?
+    assert validate.previous == assembly
+  end
+  
+  def test_next_state
+    p = Product.new
+    p.save
+    
+    assembly = Assembly.new
+    assembly.product = p
+    assembly.save
+    
+    validate = Validate.new
+    validate.product = p
+    validate.save
+
+    assert assembly.next == validate
+    assert validate.next.nil?
   end
   
 end

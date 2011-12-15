@@ -43,6 +43,16 @@ module Control
       send @workflow if @workflow
     end
     
+    def previous
+      transition = workflow.transitions.where(:to => self.class, :to_id => self.id).first
+      Kernel.const_get(transition.from).find(transition.from_id) if transition && !transition.from.blank?
+    end
+    
+    def next
+      transition = workflow.transitions.where(:from => self.class, :from_id => self.id).first
+      Kernel.const_get(transition.to).find(transition.to_id) if transition
+    end
+    
     private
     
     def is_part_of_workflow?
