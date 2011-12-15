@@ -38,13 +38,13 @@ module Control
     end
     
     def previous
-      transition = workflow.transitions.where(:to => self.class, :to_id => self.id).first
-      Kernel.const_get(transition.from).find(transition.from_id) if transition && !transition.from.blank?
+      transition = workflow.transitions.where(:to_class => self.class, :to_id => self.id).first
+      Kernel.const_get(transition.from_class).find(transition.from_id) if transition && !transition.from_class.blank?
     end
     
     def next
-      transition = workflow.transitions.where(:from => self.class, :from_id => self.id).first
-      Kernel.const_get(transition.to).find(transition.to_id) if transition
+      transition = workflow.transitions.where(:from_class => self.class, :from_id => self.id).first
+      Kernel.const_get(transition.to_class).find(transition.to_id) if transition
     end
     
     private
@@ -65,20 +65,21 @@ module Control
     
     def workflow_initial_state_or_valid_next_state
       !workflow.current_state || next_state_is_valid
-    end    
+    end
     
     def save_transition
       transition = Control::Transition.new do |t|
-        t.workflow = workflow.class.name
+        t.workflow_class = workflow.class.name
         t.workflow_id = workflow.id
         if workflow.current_state
-          t.from = workflow.current_state.class.name
+          t.from_class = workflow.current_state.class.name
           t.from_id = workflow.current_state.id
         end
-        t.to = self.class.name
+        t.to_class = self.class.name
         t.to_id = id
       end
-      transition.save                       
+      transition.save
+      puts transition.errors.each {|e| puts e}                   
     end 
     
   end

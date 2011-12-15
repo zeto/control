@@ -16,7 +16,7 @@ module Control
     end
 
     def transitions
-      Control::Transition.where(:workflow => self.class.name, :workflow_id => self.id)
+      Control::Transition.where(:workflow_class => self.class.name, :workflow_id => self.id)
     end
     
     alias :history :transitions
@@ -33,7 +33,7 @@ module Control
     
     def current_state
       if transitions.last
-        Kernel.const_get(transitions.last.to).find(transitions.last.to_id)
+        Kernel.const_get(transitions.last.to_class).find(transitions.last.to_id)
       end
     end
     

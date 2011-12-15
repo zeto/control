@@ -12,7 +12,7 @@ class TransitionTest < Test::Unit::TestCase
     a.save
     
     assert p.transitions.count == 1
-    assert p.transitions.first.to == Assembly.to_s
+    assert p.transitions.first.to_class == Assembly.to_s
     assert p.transitions.first.created_at < Time.current
     
     v = Validate.new
@@ -20,18 +20,18 @@ class TransitionTest < Test::Unit::TestCase
     v.save
     
     assert p.transitions.count == 2
-    assert p.transitions.last.from == Assembly.to_s
-    assert p.transitions.last.to == Validate.to_s
+    assert p.transitions.last.from_class == Assembly.to_s
+    assert p.transitions.last.to_class == Validate.to_s
     assert p.transitions.first.created_at < p.transitions.last.created_at
   end
   
   def test_correct_class_names
     t = Control::Transition.new
-    t.workflow = Product.to_s
+    t.workflow_class = Product.to_s
     t.workflow_id = 1
-    t.from = Validate.to_s
+    t.from_class = Validate.to_s
     t.from_id = 1
-    t.to = Assembly.to_s
+    t.to_class = Assembly.to_s
     t.to_id = 1
     
     assert t.valid?
@@ -44,11 +44,11 @@ class TransitionTest < Test::Unit::TestCase
   
   def test_incorrect_workflow
     t = Control::Transition.new
-    t.workflow = "Prudoct"
+    t.workflow_class = "Prudoct"
     t.workflow_id = 1
-    t.from = Validate.to_s
+    t.from_class = Validate.to_s
     t.from_id = 1
-    t.to = Assembly.to_s
+    t.to_class = Assembly.to_s
     t.to_id = 1
     
     assert !t.valid?
@@ -56,11 +56,11 @@ class TransitionTest < Test::Unit::TestCase
   
   def test_incorrect_from
     t = Control::Transition.new
-    t.workflow = Product.to_s
+    t.workflow_class = Product.to_s
     t.workflow_id = 1
-    t.from = 'Valideta'
+    t.from_class = 'Valideta'
     t.from_id = 1
-    t.to = Assembly.to_s
+    t.to_class = Assembly.to_s
     t.to_id = 1
     
     assert !t.valid?
@@ -68,11 +68,11 @@ class TransitionTest < Test::Unit::TestCase
   
   def test_incorrect_to
     t = Control::Transition.new
-    t.workflow = Product.to_s
+    t.workflow_class = Product.to_s
     t.workflow_id = 1
-    t.from = Validate.to_s
+    t.from_class = Validate.to_s
     t.from_id = 1
-    t.to = 'Assembli'
+    t.to_class = 'Assembli'
     t.to_id = 1
     
     assert !t.valid?

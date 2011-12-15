@@ -69,7 +69,8 @@ class WorkflowTest < Test::Unit::TestCase
     assert p.transitions.count == 2
     assert p.current_state == b2
     assert p.current_state.class == p.current_state.previous.class
-    assert p.transitions.last.to == p.transitions.last.from
+    assert p.transitions.last.from_class == p.transitions.last.to_class
+    assert p.transitions.last.from != p.transitions.last.to
   end
 
 end
