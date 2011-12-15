@@ -53,5 +53,23 @@ class WorkflowTest < Test::Unit::TestCase
     
     assert p.current_state == v
   end
+  
+  def test_transition_to_same_state
+    p = Product.new
+    p.save
+  
+    b1 = Box.new
+    b1.product = p
+    b1.save
+    
+    b2 = Box.new
+    b2.product = p
+    b2.save
+    
+    assert p.transitions.count == 2
+    assert p.current_state == b2
+    assert p.current_state.class == p.current_state.previous.class
+    assert p.transitions.last.to == p.transitions.last.from
+  end
 
 end

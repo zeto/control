@@ -18,20 +18,14 @@ module Control
             @next_states << klass_name if klass_name
           end
         else
-          @next_states.map { |s| Kernel.const_get(s) }
+          @next_states.map { |s| Kernel.const_get(s) } if @next_states
         end
       end
       
       def is_state?
         true
       end
-    end
-    
-    def validate_transition
-      raise Control::NoAssociationToWorkflow unless is_part_of_workflow?
-      raise Control::WorkflowDisabled unless workflow.enabled
-      raise Control::InvalidTransition unless workflow_initial_state_or_valid_next_state
-    end  
+    end 
     
     def workflow
       unless @workflow
@@ -55,12 +49,18 @@ module Control
     
     private
     
+    def validate_transition
+      raise Control::NoAssociationToWorkflow unless is_part_of_workflow?
+      raise Control::WorkflowDisabled unless workflow.enabled
+      raise Control::InvalidTransition unless workflow_initial_state_or_valid_next_state
+    end
+    
     def is_part_of_workflow?
       !!workflow
     end
     
     def next_state_is_valid
-      workflow.current_state && (workflow.current_state.class.next_states && (workflow.current_state.class.next_states.any? && (workflow.current_state.class.next_states.include? self.class)))
+      workflow.current_state && ((workflow.current_state.class.next_states && (workflow.current_state.class.next_states.any? && (workflow.current_state.class.next_states.include? self.class))) || !workflow.current_state.class.next_states)
     end
     
     def workflow_initial_state_or_valid_next_state
