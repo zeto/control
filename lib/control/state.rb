@@ -1,8 +1,12 @@
+require 'active_record'
+
 module Control
   module State
-  
+    
     def self.included(base)
       base.extend(ClassMethods)
+      base.send :before_save, :validate_transition
+      base.send :after_save, :save_transition
     end
   
     module ClassMethods
@@ -23,28 +27,20 @@ module Control
       end
     end
     
-    def initialize
-      super
-    end
-    
-    def save
+    def validate_transition
       raise Control::NoAssociationToWorkflow unless is_part_of_workflow?
       raise Control::WorkflowDisabled unless workflow.enabled
       raise Control::InvalidTransition unless workflow_initial_state_or_valid_next_state
-      
-      if super
-        save_transition
-      end
-    end   
+    end  
     
     def workflow
       unless @workflow
         self.class.reflect_on_all_associations.each do |a|
           klass = Kernel.const_get(a.name.to_s.classify)
-          @workflow = a.name if klass.respond_to?('is_workflow?') and klass.is_workflow?
+          @workflow = a.name if klass.respond_to?('is_workflow?') && klass.is_workflow?
         end
       end
-      self.send @workflow if @workflow
+      send @workflow if @workflow
     end
     
     private

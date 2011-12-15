@@ -11,11 +11,6 @@ module Control
       end
     end
     
-    def initialize
-      super
-      @enabled = true
-    end
-    
     def enabled
       true
     end
