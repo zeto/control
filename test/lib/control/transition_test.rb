@@ -24,4 +24,57 @@ class TransitionTest < Test::Unit::TestCase
     assert p.transitions.last.to == Validate.to_s
     assert p.transitions.first.created_at < p.transitions.last.created_at
   end
+  
+  def test_correct_class_names
+    t = Control::Transition.new
+    t.workflow = Product.to_s
+    t.workflow_id = 1
+    t.from = Validate.to_s
+    t.from_id = 1
+    t.to = Assembly.to_s
+    t.to_id = 1
+    
+    assert t.valid?
+  end
+  
+  def test_empty_transition
+    t = Control::Transition.new
+    assert !t.valid?
+  end
+  
+  def test_incorrect_workflow
+    t = Control::Transition.new
+    t.workflow = "Prudoct"
+    t.workflow_id = 1
+    t.from = Validate.to_s
+    t.from_id = 1
+    t.to = Assembly.to_s
+    t.to_id = 1
+    
+    assert !t.valid?
+  end
+  
+  def test_incorrect_from
+    t = Control::Transition.new
+    t.workflow = Product.to_s
+    t.workflow_id = 1
+    t.from = 'Valideta'
+    t.from_id = 1
+    t.to = Assembly.to_s
+    t.to_id = 1
+    
+    assert !t.valid?
+  end
+  
+  def test_incorrect_to
+    t = Control::Transition.new
+    t.workflow = Product.to_s
+    t.workflow_id = 1
+    t.from = Validate.to_s
+    t.from_id = 1
+    t.to = 'Assembli'
+    t.to_id = 1
+    
+    assert !t.valid?
+  end
 end

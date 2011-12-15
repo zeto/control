@@ -10,15 +10,9 @@ module Control
     validate :validate_classes
     
     def validate_classes
-      if !Kernel.const_get(workflow)
-        errors.add(:workflow,'workflow class does not exist')
-      end
-      if !Kernel.const_get(to)
-        errors.add(:to,'to class does not exist')
-      end
-      if !from.blank? && !Kernel.const_get(from)
-        errors.add(:from,'from class does not exist')
-      end
+      Kernel.const_get(workflow) rescue errors.add(:workflow,'invalid workflow')
+      Kernel.const_get(to) rescue errors.add(:to,'invalid to')
+      Kernel.const_get(from) if !from.blank? rescue errors.add(:from,'invalid from')
     end
     
     def to_s
