@@ -20,6 +20,19 @@ class WorkflowTest < Test::Unit::TestCase
       workflowless_state.save   
     end
   end  
+  
+  def test_state_must_have_workflow_associated
+    
+    p = Product.new    
+    p.save
+    
+    a = Assembly.new
+    
+    assert_raise Control::NoAssociationToWorkflow do
+      a.save
+    end  
+    
+  end
 
   def test_workflow_is_enabled_by_default
     assert Product.new.enabled
@@ -72,5 +85,6 @@ class WorkflowTest < Test::Unit::TestCase
     assert p.transitions.last.from_class == p.transitions.last.to_class
     assert p.transitions.last.from != p.transitions.last.to
   end
+
 
 end
