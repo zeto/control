@@ -78,8 +78,7 @@ module Control
         t.to_class = self.class.name
         t.to_id = id
       end
-      transition.save
-      puts transition.errors.each {|e| puts e}                   
+      transition.save             
     end 
     
   end

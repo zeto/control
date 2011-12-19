@@ -12,7 +12,7 @@ module Control
     def validate_classes
       Kernel.const_get(workflow_class) rescue errors.add(:workflow_class,'invalid workflow')
       Kernel.const_get(to_class) rescue errors.add(:to_class,'invalid to')
-      Kernel.const_get(from_class) if !from_class.blank? rescue errors.add(:from_class,'invalid from')
+      Kernel.const_get(from_class) unless from_class.blank? rescue errors.add(:from_class,'invalid from')
     end
     
     def to_s
@@ -28,7 +28,7 @@ module Control
     end
     
     def from
-      Kernel.const_get(from_class).find(from_id) if !from_class.blank?
+      Kernel.const_get(from_class).find(from_id) unless from_class.blank?
     end
   end  
 end

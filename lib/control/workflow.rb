@@ -35,7 +35,6 @@ module Control
       if transitions.last
         Kernel.const_get(transitions.last.to_class).find(transitions.last.to_id)
       end
-    end
-    
+    end 
   end
 end
