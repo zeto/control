@@ -24,7 +24,12 @@ class ValidatesController < ApplicationController
   # GET /validates/new
   # GET /validates/new.json
   def new
+    unless params[:product_id]
+      render :text => 'no product?'
+      return
+    end
     @validate = Validate.new
+    @validate.product_id = params[:product_id]
 
     respond_to do |format|
       format.html # new.html.erb

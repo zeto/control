@@ -24,7 +24,12 @@ class RejectsController < ApplicationController
   # GET /rejects/new
   # GET /rejects/new.json
   def new
+    unless params[:product_id]
+      render :text => 'no product?'
+      return
+    end
     @reject = Reject.new
+    @reject.product_id = params[:product_id]
 
     respond_to do |format|
       format.html # new.html.erb

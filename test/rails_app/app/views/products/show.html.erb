@@ -5,19 +5,32 @@
 <% if @product.current_state %>
   <h2>Current state: <%= @product.current_state.class %></h2>
 
-  <h2>Actions:</h2>
+  <h2>Possible actions:</h2>
   <% if @product.current_state.class.next_states %>
-    <% @product.current_state.class.next_states.each do |state| %>
-      <%= state %>
-    <% end %>
+    <ul>
+      <% @product.current_state.class.next_states.each do |state| %>
+        <li><%= link_to state.to_s, "/" + state.to_s.downcase.pluralize + "/new?product_id=" + @product.id.to_s %></li>
+      <% end %>
+    </ul>
   <% else %>
-    <% @product.states.each do |state| %>
-      <%= link_to state.to_s, state.to_s.downcase + "?product_id=" + @product.id.to_s %>
-    <% end %>
+    <ul>
+      <% @product.states.each do |state| %>
+        <li><%= link_to state.to_s, "/" + state.to_s.downcase.pluralize + "/new?product_id=" + @product.id.to_s %></li>
+      <% end %>
+    </ul>
   <% end %>
 
 <% else %>
-  <%= link_to 'Assembly', new_assembly_path + "?product_id=" + @product.id.to_s %>
+  <p><%= link_to 'Assembly', new_assembly_path + "/new?product_id=" + @product.id.to_s %></p>
+<% end %>
+
+<% if @product.transitions %>
+  <h2>History</h2>
+  <ol>
+    <% @product.transitions.each do |transition| %>
+      <li><%=transition.created_at%> - <%= link_to transition.to_class, transition.to %></li>
+    <% end %>
+  </ol>
 <% end %>
 
 <%= link_to 'Edit', edit_product_path(@product) %> |

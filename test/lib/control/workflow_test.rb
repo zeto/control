@@ -85,6 +85,22 @@ class WorkflowTest < Test::Unit::TestCase
     assert p.transitions.last.from_class == p.transitions.last.to_class
     assert p.transitions.last.from != p.transitions.last.to
   end
-
-
+  
+  def test_final_state_means_workflow_blocked
+    p = Product.new
+    p.save
+    
+    r = Reject.new
+    r.product = p
+    r.save
+    
+    a = Assembly.new
+    a.product = p
+    
+    assert_raise Control::FinalState do
+      a.save
+    end
+    
+  end
+  
 end

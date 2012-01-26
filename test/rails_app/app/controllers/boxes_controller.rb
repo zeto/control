@@ -24,8 +24,13 @@ class BoxesController < ApplicationController
   # GET /boxes/new
   # GET /boxes/new.json
   def new
+    unless params[:product_id]
+      render :text => 'no product?'
+      return
+    end
     @box = Box.new
-
+    @box.product_id = params[:product_id]
+  
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @box }
