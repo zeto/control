@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Standing test:</b>
+  <%= @validate.standing_test %>
+</p>
+
+<p>
+  <b>Sitting test:</b>
+  <%= @validate.sitting_test %>
+</p>
+
+<p>
+  <b>Fat guy test:</b>
+  <%= @validate.fat_guy_test %>
+</p>
+
+<p>
+  <b>Evel knievel jumping test:</b>
+  <%= @validate.evel_knievel_jumping_test %>
+</p>
+
+<p>
+  <b>Tester:</b>
+  <%= @validate.tester %>
+</p>
+
+<p>
+  <b>Product:</b>
+  <%= @validate.product_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_validate_path(@validate) %> |
+<%= link_to 'Back', validates_path %>

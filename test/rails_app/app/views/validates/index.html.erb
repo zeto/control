@@ -1,0 +1,33 @@
+<h1>Listing validates</h1>
+
+<table>
+  <tr>
+    <th>Standing test</th>
+    <th>Sitting test</th>
+    <th>Fat guy test</th>
+    <th>Evel knievel jumping test</th>
+    <th>Tester</th>
+    <th>Product</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @validates.each do |validate| %>
+  <tr>
+    <td><%= validate.standing_test %></td>
+    <td><%= validate.sitting_test %></td>
+    <td><%= validate.fat_guy_test %></td>
+    <td><%= validate.evel_knievel_jumping_test %></td>
+    <td><%= validate.tester %></td>
+    <td><%= validate.product_id %></td>
+    <td><%= link_to 'Show', validate %></td>
+    <td><%= link_to 'Edit', edit_validate_path(validate) %></td>
+    <td><%= link_to 'Destroy', validate, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Validate', new_validate_path %>

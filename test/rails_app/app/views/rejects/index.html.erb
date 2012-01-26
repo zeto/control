@@ -1,0 +1,23 @@
+<h1>Listing rejects</h1>
+
+<table>
+  <tr>
+    <th>Product</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @rejects.each do |reject| %>
+  <tr>
+    <td><%= reject.product_id %></td>
+    <td><%= link_to 'Show', reject %></td>
+    <td><%= link_to 'Edit', edit_reject_path(reject) %></td>
+    <td><%= link_to 'Destroy', reject, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Reject', new_reject_path %>
