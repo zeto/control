@@ -1,0 +1,2 @@
+module ValidatesHelper
+end

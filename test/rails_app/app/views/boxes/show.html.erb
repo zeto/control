@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Ribbon color:</b>
+  <%= @box.ribbon_color %>
+</p>
+
+<p>
+  <b>Product:</b>
+  <%= @box.product_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_box_path(@box) %> |
+<%= link_to 'Back', boxes_path %>

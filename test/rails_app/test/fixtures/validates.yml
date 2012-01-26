@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  standing_test: false
+  sitting_test: false
+  fat_guy_test: false
+  evel_knievel_jumping_test: false
+  tester: MyString
+  product_id: 1
+
+two:
+  standing_test: false
+  sitting_test: false
+  fat_guy_test: false
+  evel_knievel_jumping_test: false
+  tester: MyString
+  product_id: 1
