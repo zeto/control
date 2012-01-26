@@ -1,14 +1,14 @@
-$LOAD_PATH << File.expand_path( File.dirname(__FILE__) + '/../lib' )
-
-require 'test/unit'
-require 'turn'
-require 'active_support'
 require 'active_record'
-require 'active_support/core_ext/object'
+require 'turn'
+
 require 'control'
+require 'test/unit'
 
 require './test/test_schema'
 require './db/migrate/create_transitions'
+
+
+
 
 #                   Product
 #                      |

@@ -15,3 +15,4 @@ desc "Open an irb session"
 task :console do
   sh "irb -rubygems -I lib -r control.rb"
 end
+

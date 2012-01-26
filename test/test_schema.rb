@@ -1,4 +1,4 @@
-ActiveRecord::Base.establish_connection(:adapter => "sqlite3", :database => ":memory:")
+ActiveRecord::Base.establish_connection(:adapter => "sqlite3", :database => ":memory:", :pool => 1)
 ActiveRecord::Schema.define(:version => 1) do
   
   create_table :products do |t|

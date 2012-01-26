@@ -1,5 +1,3 @@
-require 'active_record'
-
 module Control
   class Transition < ActiveRecord::Base
     validates :workflow_class, :presence => true
