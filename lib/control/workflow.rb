@@ -13,7 +13,6 @@ module Control
       def states
         reflect_on_all_associations.each.map do |a|
           klass = Kernel.const_get(a.name.to_s.classify)
-        
           if klass.respond_to?(:is_state?) and klass.is_state?
             klass
           end
@@ -23,6 +22,10 @@ module Control
     
     def enabled
       true
+    end
+
+    def states
+      self.class.states
     end
 
     def transitions

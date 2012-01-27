@@ -31,7 +31,7 @@ class Off < ActiveRecord::Base
   include Control::State
 
   belongs_to :bulb
-  next_states :on # optional, constrain possible next states
+  next_states :on # optional, to constrain possible next states, can also specify :none to make a state final
 end
 
 def example
