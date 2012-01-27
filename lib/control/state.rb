@@ -1,6 +1,6 @@
 module Control
   module State
-    
+
     def self.included(base)
       base.extend(ClassMethods)
       base.send :before_save, :validate_transition
@@ -9,10 +9,9 @@ module Control
   
     module ClassMethods
       def next_states(*states)
-        puts states.first.inspect if states
-        if states && states.count > 0
+        if states && states.any?
           if states.first == :none
-            @final_state = true
+            @final = true
           else
             @next_states = []
             states.each do |s|
@@ -21,8 +20,12 @@ module Control
             end
           end
         else
-          @next_states.map { |s| Kernel.const_get(s) } if !@final_state && @next_states
+          @next_states.map { |s| Kernel.const_get(s) } if !@final && @next_states
         end
+      end
+
+      def final?
+        !!@final
       end
       
       def is_state?
@@ -56,9 +59,13 @@ module Control
       raise Control::NoAssociationToWorkflow unless is_part_of_workflow?
       raise Control::WorkflowDisabled unless workflow.enabled
       raise Control::InvalidTransition unless workflow_initial_state_or_valid_next_state
-      raise Control::FinalState if @final_state
+      raise Control::FinalState if is_final?
     end
     
+    def is_final?
+      workflow.current_state && workflow.current_state.class.final?
+    end
+
     def is_part_of_workflow?
       !!workflow
     end

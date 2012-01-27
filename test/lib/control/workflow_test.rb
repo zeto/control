@@ -89,18 +89,19 @@ class WorkflowTest < Test::Unit::TestCase
   def test_final_state_means_workflow_blocked
     p = Product.new
     p.save
-    
+ 
     r = Reject.new
     r.product = p
-    r.save
+    
+    assert_nothing_raised Control::FinalState do
+      r.save
+    end
     
     a = Assembly.new
     a.product = p
-    
+
     assert_raise Control::FinalState do
       a.save
     end
-    
   end
-  
 end
