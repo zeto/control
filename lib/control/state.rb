@@ -20,10 +20,12 @@ module Control
             end
           end
         else
-          if not @final
-            if @next_states
+          if @final                                         # state is final, there are no possible next states
+            Array.new
+          else                                              # state is not final, carry on
+            if @next_states                                 # possible next states were previously declared in class
               @next_states.map { |s| Kernel.const_get(s) }
-            else
+            else                                            # all states connected to the workflow are valid, no constrains
               workflow_class.states
             end
           end
@@ -81,7 +83,7 @@ module Control
     end
     
     def next_state_is_valid
-      workflow.current_state && ((workflow.current_state.class.next_states && (workflow.current_state.class.next_states.any? && (workflow.current_state.class.next_states.include? self.class))) || !workflow.current_state.class.next_states)
+      workflow.current_state && ((workflow.current_state.class.next_states && (workflow.current_state.class.next_states.any? && (workflow.current_state.class.next_states.include? self.class))) || workflow.current_state.class.next_states.blank?)
     end
     
     def workflow_initial_state_or_valid_next_state
