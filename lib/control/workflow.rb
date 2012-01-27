@@ -35,9 +35,7 @@ module Control
     alias :history :transitions
     
     def current_state
-      if transitions.last
-        Kernel.const_get(transitions.last.to_class).find(transitions.last.to_id)
-      end
+      transitions.last.to if transitions.last
     end 
   end
 end

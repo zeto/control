@@ -57,12 +57,12 @@ module Control
     
     def previous
       transition = workflow.transitions.where(:to_class => self.class, :to_id => self.id).first
-      Kernel.const_get(transition.from_class).find(transition.from_id) if transition && !transition.from_class.blank?
+      transition.from if transition
     end
     
     def next
       transition = workflow.transitions.where(:from_class => self.class, :from_id => self.id).first
-      Kernel.const_get(transition.to_class).find(transition.to_id) if transition
+      transition.to if transition
     end
     
     private
