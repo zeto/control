@@ -9,7 +9,7 @@ module Control
   
     module ClassMethods
       def next_states(*states)
-        if states && states.any?
+        if states && states.count > 0
           if states.first == :none
             @final = true
           else
@@ -20,7 +20,13 @@ module Control
             end
           end
         else
-          @next_states.map { |s| Kernel.const_get(s) } if !@final && @next_states
+          if not @final
+            if @next_states
+              @next_states.map { |s| Kernel.const_get(s) }
+            else
+              workflow_class.states
+            end
+          end
         end
       end
 
@@ -31,6 +37,17 @@ module Control
       def is_state?
         true
       end
+      
+      def workflow_class
+        unless @workflow_class
+          reflect_on_all_associations.each do |a|
+            klass = Kernel.const_get(a.name.to_s.classify)
+            @workflow_class = klass if klass.respond_to?('is_workflow?') && klass.is_workflow?
+          end
+        end
+        @workflow_class
+      end
+
     end 
     
     def workflow

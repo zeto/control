@@ -5,23 +5,20 @@
 <% if @product.current_state %>
   <h2>Current state: <%= @product.current_state.class %></h2>
 
-  <h2>Possible actions:</h2>
+  
   <% if @product.current_state.class.next_states %>
+    <h2>Possible actions:</h2>
     <ul>
       <% @product.current_state.class.next_states.each do |state| %>
         <li><%= link_to state.to_s, "/" + state.to_s.downcase.pluralize + "/new?product_id=" + @product.id.to_s %></li>
       <% end %>
     </ul>
   <% else %>
-    <ul>
-      <% @product.states.each do |state| %>
-        <li><%= link_to state.to_s, "/" + state.to_s.downcase.pluralize + "/new?product_id=" + @product.id.to_s %></li>
-      <% end %>
-    </ul>
+    <h2>No possible actions</h2>
   <% end %>
 
 <% else %>
-  <p><%= link_to 'Assembly', new_assembly_path + "/new?product_id=" + @product.id.to_s %></p>
+  <p><%= link_to 'Assembly', new_assembly_path + "?product_id=" + @product.id.to_s %></p>
 <% end %>
 
 <% if @product.transitions %>

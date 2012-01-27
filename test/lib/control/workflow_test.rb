@@ -39,11 +39,11 @@ class WorkflowTest < Test::Unit::TestCase
   end
   
   def test_state_list
-    assert Product.new.states.count == 4
-    assert Product.new.states.include?(Box)
-    assert Product.new.states.include?(Assembly)
-    assert Product.new.states.include?(Reject)
-    assert Product.new.states.include?(Validate)
+    assert Product.new.class.states.count == 4
+    assert Product.new.class.states.include?(Box)
+    assert Product.new.class.states.include?(Assembly)
+    assert Product.new.class.states.include?(Reject)
+    assert Product.new.class.states.include?(Validate)
   end
   
   def test_initially_current_state_is_not_defined

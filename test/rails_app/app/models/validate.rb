@@ -3,5 +3,5 @@ class Validate < ActiveRecord::Base
 
   belongs_to :product
   
-  next_states :box, :reject
+  next_states :box, :reject, :validate
 end

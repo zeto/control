@@ -9,6 +9,16 @@ module Control
       def is_workflow?
         true
       end
+      
+      def states
+        reflect_on_all_associations.each.map do |a|
+          klass = Kernel.const_get(a.name.to_s.classify)
+        
+          if klass.respond_to?('is_state?') and klass.is_state?
+            klass
+          end
+        end
+      end
     end
     
     def enabled
@@ -20,16 +30,6 @@ module Control
     end
     
     alias :history :transitions
-
-    def states
-      self.class.reflect_on_all_associations.each.map do |a|
-        klass = Kernel.const_get(a.name.to_s.classify)
-        
-        if klass.respond_to?('is_state?') and klass.is_state?
-          klass
-        end
-      end
-    end
     
     def current_state
       if transitions.last
