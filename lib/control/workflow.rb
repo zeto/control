@@ -14,7 +14,7 @@ module Control
         reflect_on_all_associations.each.map do |a|
           klass = Kernel.const_get(a.name.to_s.classify)
         
-          if klass.respond_to?('is_state?') and klass.is_state?
+          if klass.respond_to?(:is_state?) and klass.is_state?
             klass
           end
         end

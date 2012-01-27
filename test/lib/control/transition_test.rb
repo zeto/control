@@ -25,7 +25,7 @@ class TransitionTest < Test::Unit::TestCase
     assert p.transitions.first.created_at < p.transitions.last.created_at
   end
   
-  # TODO: Check for correct error, not just valid
+  # TODO: Check for correct exception raised, not just valid object
   def test_correct_class_names
     t = Control::Transition.new
     t.workflow_class = Product.to_s
@@ -43,7 +43,7 @@ class TransitionTest < Test::Unit::TestCase
     assert !t.valid?
   end
   
-  # TODO: Check for correct error, not just valid
+  # TODO: Check for correct exception raised, not just valid object
   def test_incorrect_workflow
     t = Control::Transition.new
     t.workflow_class = "Prudoct"
@@ -56,7 +56,7 @@ class TransitionTest < Test::Unit::TestCase
     assert !t.valid?
   end
   
-  # TODO: Check for correct error, not just valid
+  # TODO: Check for correct exception raised, not just valid object
   def test_incorrect_from
     t = Control::Transition.new
     t.workflow_class = Product.to_s
@@ -69,7 +69,7 @@ class TransitionTest < Test::Unit::TestCase
     assert !t.valid?
   end
   
-  # TODO: Check for correct error, not just valid
+  # TODO: Check for correct exception raised, not just valid object
   def test_incorrect_to
     t = Control::Transition.new
     t.workflow_class = Product.to_s

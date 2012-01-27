@@ -42,22 +42,15 @@ module Control
         unless @workflow_class
           reflect_on_all_associations.each do |a|
             klass = Kernel.const_get(a.name.to_s.classify)
-            @workflow_class = klass if klass.respond_to?('is_workflow?') && klass.is_workflow?
+            @workflow_class = klass if klass.respond_to?(:is_workflow?) && klass.is_workflow?
           end
         end
         @workflow_class
       end
-
     end 
     
     def workflow
-      unless @workflow
-        self.class.reflect_on_all_associations.each do |a|
-          klass = Kernel.const_get(a.name.to_s.classify)
-          @workflow = a.name if klass.respond_to?('is_workflow?') && klass.is_workflow?
-        end
-      end
-      send @workflow if @workflow
+      send self.class.workflow_class.to_s.underscore if self.class.workflow_class
     end
     
     def previous
@@ -76,10 +69,10 @@ module Control
       raise Control::NoAssociationToWorkflow unless is_part_of_workflow?
       raise Control::WorkflowDisabled unless workflow.enabled
       raise Control::InvalidTransition unless workflow_initial_state_or_valid_next_state
-      raise Control::FinalState if is_final?
+      raise Control::FinalState if current_state_is_final?
     end
     
-    def is_final?
+    def current_state_is_final?
       workflow.current_state && workflow.current_state.class.final?
     end
 
