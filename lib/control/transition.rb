@@ -7,31 +7,45 @@ module Control
     validates :from_id, :presence => true, :if => "!from_class.nil?"
     validate :validate_classes
     validate :validate_objects
-    
+
+    private    
+
+    # Validate if classes are declared
     def validate_classes
       Kernel.const_get(from_class) unless from_class.blank? rescue errors.add(:from_class,'invalid from')
       Kernel.const_get(to_class) rescue errors.add(:to_class,'invalid to')
       Kernel.const_get(workflow_class) rescue errors.add(:workflow_class,'invalid workflow')
     end
     
+    # Validate if state and workflow objects exist
     def validate_objects
     	from rescue errors.add(:workflow,'invalid from')
     	to rescue errors.add(:to,'invalid to')
     	workflow rescue errors.add(:workflow,'invalid workflow')
     end
+
+    public
     
+    # Pretty print a transition
+    # @return [String] transition description: Workflow, from and to states, date
     def to_s
       "Workflow: #{workflow_class} || #{created_at} #{from_class} -> #{to_class}"
     end
     
+    # Get workflow
+    # @return workflow object
     def workflow
       Kernel.const_get(workflow_class).find(workflow_id)
     end
     
+    # Get destination state for transition
+    # @return state object
     def to
       Kernel.const_get(to_class).find(to_id)
     end
     
+    # Get source state for transition
+    # @return state object
     def from
       Kernel.const_get(from_class).find(from_id) unless from_class.blank?
     end
