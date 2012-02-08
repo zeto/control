@@ -1,5 +1,12 @@
 <p id="notice"><%= notice %></p>
 
+<h1>
+  <b>Product:</b>
+  <%= link_to @validate.product.codename, @validate.product %>
+</h1>
+
+<%= breadcrumb @validate %>
+
 <p>
   <b>Standing test:</b>
   <%= @validate.standing_test %>
@@ -25,11 +32,4 @@
   <%= @validate.tester %>
 </p>
 
-<p>
-  <b>Product:</b>
-  <%= link_to @validate.product.codename, @validate.product %>
-</p>
 
-
-<%= link_to 'Edit', edit_validate_path(@validate) %> |
-<%= link_to 'Back', validates_path %>

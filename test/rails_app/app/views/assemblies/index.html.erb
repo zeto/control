@@ -14,7 +14,7 @@
     <td><%= assembly.assembler %></td>
     <td><%= assembly.product_id %></td>
     <td><%= link_to 'Show', assembly %></td>
-    <td><%= link_to 'Edit', edit_assembly_path(assembly) %></td>
+    <td><%= link_to 'Edit', edit_product_assembly_path(assembly) %></td>
     <td><%= link_to 'Destroy', assembly, confirm: 'Are you sure?', method: :delete %></td>
   </tr>
 <% end %>
@@ -22,4 +22,4 @@
 
 <br />
 
-<%= link_to 'New Assembly', new_assembly_path %>
+<%= link_to 'New Assembly', new_product_assembly_path %>

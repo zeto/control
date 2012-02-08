@@ -1,15 +1,14 @@
 <p id="notice"><%= notice %></p>
 
+<h1>
+  <b>Product:</b>
+  <%= link_to @box.product.codename, @box.product %>
+</h1>
+
+<%= breadcrumb @box %>
+
 <p>
   <b>Ribbon color:</b>
   <%= @box.ribbon_color %>
 </p>
 
-<p>
-  <b>Product:</b>
-  <%= link_to @box.product.codename, @box.product %>
-</p>
-
-
-<%= link_to 'Edit', edit_box_path(@box) %> |
-<%= link_to 'Back', boxes_path %>

@@ -5,9 +5,11 @@ RailsApp::Application.routes.draw do
 
   resources :validates
 
-  resources :assemblies
+  
 
-  resources :products
+  resources :products do
+    resources :assemblies
+  end
   
   root :to => 'products#index'
 

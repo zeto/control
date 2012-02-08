@@ -1,15 +1,14 @@
 <p id="notice"><%= notice %></p>
 
+<h1>
+  <b>Product:</b>
+  <%= link_to @assembly.product.codename, @assembly.product %>
+</h1>
+
+<%= breadcrumb @assembly %>
+
 <p>
   <b>Assembler:</b>
   <%= @assembly.assembler %>
 </p>
 
-<p>
-  <b>Product:</b>
-  <%= link_to @assembly.product.codename, @assembly.product %>
-</p>
-
-
-<%= link_to 'Edit', edit_assembly_path(@assembly) %> |
-<%= link_to 'Back', assemblies_path %>

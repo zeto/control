@@ -1,10 +1,9 @@
 <p id="notice"><%= notice %></p>
 
-<p>
+<h1>
   <b>Product:</b>
   <%= link_to @reject.product.codename, @reject.product %>
-</p>
+</h1>
 
+<%= breadcrumb @reject %>
 
-<%= link_to 'Edit', edit_reject_path(@reject) %> |
-<%= link_to 'Back', rejects_path %>
