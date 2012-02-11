@@ -18,14 +18,14 @@
   <% end %>
 
 <% else %>
-  <p><%= link_to 'Assembly', new_assembly_path + "?product_id=" + @product.id.to_s %></p>
+  <p><%= link_to 'Assembly', new_product_assembly_path + "?product_id=" + @product.id.to_s %></p>
 <% end %>
 
 <% if @product.transitions %>
   <h2>History</h2>
   <ol>
     <% @product.transitions.each do |transition| %>
-      <li><%=transition.created_at%> - <%= link_to transition.to_class, transition.to %></li>
+      <li><%=transition.created_at%> - <%= link_to transition.to_class, [@product,transition.to] %></li>
     <% end %>
   </ol>
 <% end %>

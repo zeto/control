@@ -1,4 +1,4 @@
-<%= form_for(@assembly) do |f| %>
+<%= form_for(@product,@assembly) do |f| %>
   <% if @assembly.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@assembly.errors.count, "error") %> prohibited this assembly from being saved:</h2>

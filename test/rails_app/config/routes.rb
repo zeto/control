@@ -1,14 +1,10 @@
 RailsApp::Application.routes.draw do
-  resources :rejects
-
-  resources :boxes
-
-  resources :validates
-
-  
 
   resources :products do
     resources :assemblies
+    resources :validates
+    resources :boxes
+    resources :rejects
   end
   
   root :to => 'products#index'
