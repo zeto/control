@@ -15,6 +15,5 @@ module Control
   
   # Raised when the workflow is in a final state and is therefore blocked for any new transition
   class FinalState < ControlError
-  end
-  
+  end  
 end

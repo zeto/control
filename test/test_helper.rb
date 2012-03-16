@@ -61,3 +61,7 @@ class WorkflowlessState < ActiveRecord::Base
   
   next_states :validate
 end
+
+class InvalidState < ActiveRecord::Base
+  include Control::State
+end

@@ -13,22 +13,18 @@ module Control
       # @param states state classes in underscore format. Can also use :none to mark state as final
       # @return [Array<State>] called with no parameters, an array is returned with next possible states
       def next_states(*states)
-        if states && states.count > 0
+        if states.any?
           if states.include? :none
             @final = true
           else
-            @next_states = []
-            states.each do |s|
-              klass_name = s.to_s.classify
-              @next_states << klass_name if klass_name
-            end
+            @next_states = states.map{|s| s.to_s.classify}.compact
           end
         else
           if @final                                         # state is final, there are no possible next states
             Array.new
           else                                              # state is not final, carry on
             if @next_states                                 # possible next states were previously declared in class
-              @next_states.map { |s| Kernel.const_get(s) }
+              @next_states.map {|s| Kernel.const_get(s)}
             else                                            # all states connected to the workflow are valid, no constrains
               workflow_class.states
             end

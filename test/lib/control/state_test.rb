@@ -11,6 +11,13 @@ class StateTest < Test::Unit::TestCase
     assert !Validate.next_states.include?(Validate)
     assert !Validate.next_states.include?(Assembly)
   end
+
+  def test_next_state_is_valid_state
+    InvalidState.next_states :state_that_does_not_exist
+    assert_raise NameError do
+      InvalidState.next_states
+    end
+  end
   
   def test_infer_workflow_to_which_i_belong
     p = Product.new
