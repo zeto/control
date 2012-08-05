@@ -15,7 +15,7 @@ module Control
       # @return [Array<Class>]
       def states
         reflect_on_all_associations.each.map do |a|
-          klass = Kernel.const_get(a.name.to_s.classify)
+          klass = Kernel.qualified_const_get(a.class_name.to_s.classify)
           if klass.respond_to?(:is_state?) and klass.is_state?
             klass
           end

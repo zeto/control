@@ -12,9 +12,9 @@ module Control
 
     # Validate if classes are declared
     def validate_classes
-      Kernel.const_get(from_class) unless from_class.blank? rescue errors.add(:from_class,'invalid from')
-      Kernel.const_get(to_class) rescue errors.add(:to_class,'invalid to')
-      Kernel.const_get(workflow_class) rescue errors.add(:workflow_class,'invalid workflow')
+      Kernel.qualified_const_get(from_class) unless from_class.blank? rescue errors.add(:from_class,'invalid from')
+      Kernel.qualified_const_get(to_class) rescue errors.add(:to_class,'invalid to')
+      Kernel.qualified_const_get(workflow_class) rescue errors.add(:workflow_class,'invalid workflow')
     end
     
     # Validate if state and workflow objects exist
@@ -35,19 +35,19 @@ module Control
     # Get workflow
     # @return workflow object
     def workflow
-      Kernel.const_get(workflow_class).find(workflow_id)
+      Kernel.qualified_const_get(workflow_class).find(workflow_id)
     end
     
     # Get destination state for transition
     # @return state object
     def to
-      Kernel.const_get(to_class).find(to_id)
+      Kernel.qualified_const_get(to_class).find(to_id)
     end
     
     # Get source state for transition
     # @return state object
     def from
-      Kernel.const_get(from_class).find(from_id) unless from_class.blank?
+      Kernel.qualified_const_get(from_class).find(from_id) unless from_class.blank?
     end
   end  
 end

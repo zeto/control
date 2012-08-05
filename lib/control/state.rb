@@ -24,7 +24,7 @@ module Control
             Array.new
           else                                              # state is not final, carry on
             if @next_states                                 # possible next states were previously declared in class
-              @next_states.map {|s| Kernel.const_get(s)}
+              @next_states.map { |s| Kernel.qualified_const_get(s) }
             else                                            # all states connected to the workflow are valid, no constrains
               workflow_class.states
             end
@@ -43,7 +43,7 @@ module Control
       def workflow_class
         unless @workflow_class
           reflect_on_all_associations.each do |a|
-            klass = Kernel.const_get(a.name.to_s.classify)
+            klass = Kernel.qualified_const_get(a.name.to_s.classify)
             @workflow_class = klass if klass.respond_to?(:is_workflow?) && klass.is_workflow?
           end
         end
@@ -128,7 +128,7 @@ module Control
         t.to_class = self.class.name
         t.to_id = id
       end
-      transition.save             
+      transition.save!             
     end 
     
   end
