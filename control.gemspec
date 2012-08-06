@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'control'
-  s.version     = '0.7.1'
+  s.version     = '0.8.0'
   s.date        = '2012-02-01'
   s.summary     = "Workflow State Machine"
   s.description = "State Machine integrated with ActiveRecord"
