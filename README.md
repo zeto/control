@@ -3,19 +3,21 @@ Workflow engine
 [![Build Status](https://secure.travis-ci.org/zeto/control.png)](http://travis-ci.org/zeto/control)
 
 Premises
-* ActiveRecord
-* Each state is a separate object.
+<ul>
+<li>ActiveRecord</li>
+<li>Each state is a separate object.</li>
 
 Features
-* State can be as rich in functionality was wanted.
-* No data is ever lost. History is always saved. 
-* It is possible to track every single transition done in the workflow.
-* Advancing a state is as easy as creating a state object and calling "save".
-* Can transition to same state.
-* Minimal code to define workflow and states.
+<li>State can be as rich in functionality was wanted.</li>
+<li>No data is ever lost. History is always saved. </li>
+<li>It is possible to track every single transition done in the workflow.</li>
+<li>Advancing a state is as easy as creating a state object and calling "save".</li>
+<li>Can transition to same state.</li>
+<li>Minimal code to define workflow and states.</li>
 
 Simple example for a Bulb with two states:
 
+<pre><code>
 class Bulb < ActiveRecord::Base
   include Control::Workflow
   
@@ -62,24 +64,21 @@ def example
   # Bulb knows which state is current. (Off)
   my_bulb.current_state
 end
-
+</code></pre>
 
 Installing:
 
 1. Add control gem to gemfile.
-gem 'control'
+<pre><code>gem 'control'</code></pre>
 or
-gem 'control', :git => 'git://github.com/zeto/control.git' # Edge
+<pre><code>gem 'control', :git => 'git://github.com/zeto/control.git' # Edge</code></pre>
 
 2. Generate tables (run rake db:migrate after)
-$ rails generate control_install
+<pre><code>$ rails generate control_install</pre></code>
 
 Testing the gem:
-
+<pre><code>
 $ bundle
 $ rake
-
-Ubuntu Linux users:
-Ruby must be compiled with sqlite3 support
-* 'sudo apt-get install sqlite3 libsqlite3-dev'
+</pre></code>
 
