@@ -21,20 +21,20 @@ Features
 Simple example for a Bulb with two states:
 
 <pre><code>
-class Bulb < ActiveRecord::Base
+class Bulb &lt; ActiveRecord::Base
   include Control::Workflow
   
   has_many :ons
   has_many :offs
 end
 
-class On < ActiveRecord::Base
+class On &lt; ActiveRecord::Base
   include Control::State
 	
   belongs_to :bulb
 end
 
-class Off < ActiveRecord::Base
+class Off &lt; ActiveRecord::Base
   include Control::State
 
   belongs_to :bulb
