@@ -1,6 +1,6 @@
 Workflow engine
 
-"!https://secure.travis-ci.org/zeto/control.png!":http://travis-ci.org/zeto/control
+[![Build Status](https://secure.travis-ci.org/[zeto]/[control].png)](http://travis-ci.org/[zeto]/[control])
 
 Premises
 * ActiveRecord
