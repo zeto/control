@@ -6,14 +6,17 @@ Premises
 <ul>
 <li>ActiveRecord</li>
 <li>Each state is a separate object.</li>
+</ul>
 
 Features
+<ul>
 <li>State can be as rich in functionality was wanted.</li>
 <li>No data is ever lost. History is always saved. </li>
 <li>It is possible to track every single transition done in the workflow.</li>
 <li>Advancing a state is as easy as creating a state object and calling "save".</li>
 <li>Can transition to same state.</li>
 <li>Minimal code to define workflow and states.</li>
+</ul>
 
 Simple example for a Bulb with two states:
 
