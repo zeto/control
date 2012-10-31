@@ -43,7 +43,7 @@ module Control
       def workflow_class
         unless @workflow_class
           reflect_on_all_associations.each do |a|
-            klass = Kernel.qualified_const_get(a.name.to_s.classify)
+            klass = a.klass
             @workflow_class = klass if klass.respond_to?(:is_workflow?) && klass.is_workflow?
           end
         end
