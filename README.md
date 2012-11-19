@@ -1,7 +1,7 @@
 Workflow engine
 
 [![Build Status](https://secure.travis-ci.org/zeto/control.png)](http://travis-ci.org/zeto/control)
-[![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/zeto/allows)
+[![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/zeto/control)
 
 Premises
 <ul>
